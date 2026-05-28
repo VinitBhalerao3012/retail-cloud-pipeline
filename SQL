@@ -1,0 +1,71 @@
+-- Query 1: Overall Business Performance Summary
+SELECT
+  COUNT(DISTINCT order_id)           AS total_orders,
+  COUNT(DISTINCT customer_id)        AS total_customers,
+  COUNT(DISTINCT product_id)         AS total_products,
+  ROUND(SUM(sales), 2)               AS total_sales,
+  ROUND(SUM(profit), 2)              AS total_profit,
+  ROUND(AVG(profit_margin_pct), 2)   AS avg_profit_margin,
+  ROUND(AVG(days_to_ship), 1)        AS avg_days_to_ship
+FROM `neat-responder-426714-d8.retail_pipeline.superstore_sales`;
+
+--Query 2 — Sales and Profit by Region:
+SELECT
+  region,
+  COUNT(DISTINCT order_id)     AS total_orders,
+  ROUND(SUM(sales), 2)         AS total_sales,
+  ROUND(SUM(profit), 2)        AS total_profit,
+  ROUND(AVG(profit_margin_pct), 2) AS avg_profit_margin
+FROM `neat-responder-426714-d8.retail_pipeline.superstore_sales`
+GROUP BY region
+ORDER BY total_sales DESC;
+
+--Query 3 — Sales by Category and Sub-Category:
+SELECT
+  category,
+  sub_category,
+  ROUND(SUM(sales), 2)         AS total_sales,
+  ROUND(SUM(profit), 2)        AS total_profit,
+  ROUND(AVG(profit_margin_pct), 2) AS avg_profit_margin,
+  COUNT(DISTINCT order_id)     AS total_orders
+FROM `neat-responder-426714-d8.retail_pipeline.superstore_sales`
+GROUP BY category, sub_category
+ORDER BY total_profit DESC;
+
+--Query 4 — Customer Segment Performance:
+SELECT
+  segment,
+  COUNT(DISTINCT customer_id)  AS total_customers,
+  COUNT(DISTINCT order_id)     AS total_orders,
+  ROUND(SUM(sales), 2)         AS total_sales,
+  ROUND(SUM(profit), 2)        AS total_profit,
+  ROUND(AVG(profit_margin_pct), 2) AS avg_profit_margin
+FROM `neat-responder-426714-d8.retail_pipeline.superstore_sales`
+GROUP BY segment
+ORDER BY total_sales DESC;
+
+--Query 5 — Monthly Sales Trend:
+SELECT
+  order_year,
+  order_month,
+  order_month_name,
+  ROUND(SUM(sales), 2)         AS monthly_sales,
+  ROUND(SUM(profit), 2)        AS monthly_profit,
+  COUNT(DISTINCT order_id)     AS total_orders
+FROM `neat-responder-426714-d8.retail_pipeline.superstore_sales`
+GROUP BY order_year, order_month, order_month_name
+ORDER BY order_year, order_month;
+
+--Query 6 — Top 10 Most Profitable Products:
+SELECT
+  product_name,
+  category,
+  sub_category,
+  ROUND(SUM(sales), 2)         AS total_sales,
+  ROUND(SUM(profit), 2)        AS total_profit,
+  ROUND(AVG(profit_margin_pct), 2) AS avg_profit_margin,
+  COUNT(DISTINCT order_id)     AS total_orders
+FROM `neat-responder-426714-d8.retail_pipeline.superstore_sales`
+GROUP BY product_name, category, sub_category
+ORDER BY total_profit DESC
+LIMIT 10;
