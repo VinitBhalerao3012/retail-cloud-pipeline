@@ -146,6 +146,7 @@ Six analytical queries written in BigQuery SQL (`SQL/analysis_queries.sql`):
 
 ## Repository Structure
 
+```
 retail-cloud-pipeline/
 │
 ├── data/
@@ -166,8 +167,7 @@ retail-cloud-pipeline/
 │   └── forecast_chart.png          (Page 2 forecast chart)
 │
 └── README.md
-
----
+```
 
 ## Author
 
